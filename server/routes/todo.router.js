@@ -1,4 +1,4 @@
-const { response } = require('express');
+const { response, Router } = require('express');
 const express = require('express');
 const { Pool } = require('pg');
 const pool = require('../modules/pool.js');
@@ -21,6 +21,17 @@ router.post('/', (req, res)=>{
 })
 
 
+router.get('/', (req,res)=>{
+    console.log('in GET /todo');
+    const queryText = `SELECT * FROM "to_do_list";`;
+    pool.query(queryText).then((result)=>{
+        console.log('SELECT SUCCESS!', result);
+        res.send(result.rows);
+    }).catch((error)=>{
+        console.log('error in /todo GET ', error);
+        res.sendStatus(500);
+    })
+});
 
 
 
