@@ -14,10 +14,25 @@ function onReady() {
 
 
 /**
- * Subit Task
+ * Submit Task
  */
 function submitTask(){
     console.log('in submitTask');
+    let taskInput = $('#taskInput').val();
+    console.log('the taskInput is', taskInput);
+
+    $.ajax({
+        type: 'POST',
+        url: '/todo',
+        data: {
+            task: taskInput
+        }
+    }).then(function(response){
+        console.log('posted task to server')
+    }).catch(function (error){
+        console.log('ERROR in submitTask ', error);
+        alert('Something went wrong in submitTask')
+    })
 }
 
 

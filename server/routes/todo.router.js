@@ -1,7 +1,27 @@
 const { response } = require('express');
 const express = require('express');
+const { Pool } = require('pg');
 const pool = require('../modules/pool.js');
 const router = express.Router();
+
+
+router.post('/', (req, res)=>{
+    const input = req.body;
+    const queryText =  `INSERT INTO "to_do_list"
+                        ("task")
+                        VALUES ($1)`
+    pool.query(queryText, [input.task])
+        .then((result)=>{
+            console.log(result);
+            res.send(result);
+        }).catch((error)=>{
+            console.log("error in todo post", error);
+            res.sendStatus(500);
+        })
+})
+
+
+
 
 
 // GET
