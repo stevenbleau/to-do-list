@@ -9,6 +9,8 @@ function onReady() {
     $('body').on('click', '#submitBtn', submitTask);
     $('body').on('click','#completeBtn', completeTask);
     $('body').on('click','#deleteBtn', deleteTask);
+
+    getTasks();
 }
 
 
@@ -50,8 +52,8 @@ function getTasks(){
             $('#to-do-list').append(`
                 <div class="to-do-item" id="to-do-1">
                     <h2>${todo.task}</h2>
-                    <button id="completeBtn data-id="${todo.id}">Complete</button>
-                    <button id="deleteBtn" data-id="${todo.id}>Delete</button>
+                    <button id="completeBtn" data-id="${todo.id}">Complete</button>
+                    <button id="deleteBtn" data-id="${todo.id}">Delete</button>
                 </div>
             `);
         }
@@ -75,4 +77,30 @@ function completeTask(){
  */
 function deleteTask(){
     console.log('in deleteTask');
+    const taskId=$(this).data('id');
+    console.log('deleteTask', taskId);
+    $.ajax({
+        type: 'DELETE',
+        url: `/todo/${taskId}`
+    }).then(function(response){
+        getTasks();
+    }).catch(function(error){
+        console.log(error);
+        alert('something went wrong!');
+    })
 }
+
+
+// function deleteSong(){
+//     const songId=$(this).data('id');
+//     console.log('deleteSong', songId);
+//     $.ajax({
+//         type: 'DELETE',
+//         url: `/song/${songId}` // No ':'
+//     }).then(function(response){
+//         getSongs();
+//     }).catch(function(error) {
+//         console.log(error);
+//         alert('Something went wrong!');
+//     })
+// }
