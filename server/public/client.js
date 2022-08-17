@@ -7,8 +7,8 @@ function onReady() {
 
     //click event listeners
     $('body').on('click', '#submitBtn', submitTask);
-    $('body').on('click','#completeBtn', completeTask);
-    $('body').on('click','#deleteBtn', deleteTask);
+    $('body').on('click','.completeBtn', completeTask);
+    $('body').on('click','.deleteBtn', deleteTask);
 
     getTasks();
 }
@@ -52,8 +52,8 @@ function getTasks(){
             $('#to-do-list').append(`
                 <div class="to-do-item" id="to-do-${todo.id}">
                     <h2>${todo.task}</h2>
-                    <button id="completeBtn" data-id="${todo.id}">Complete</button>
-                    <button id="deleteBtn" data-id="${todo.id}">Delete</button>
+                    <button class="completeBtn id="completeBtn${todo.id}" data-id="${todo.id}">Complete</button>
+                    <button class="deleteBtn" id="deleteBtn${todo.id}" data-id="${todo.id}">Delete</button>
                 </div>
             `);
             if(todo.status==='complete'){
