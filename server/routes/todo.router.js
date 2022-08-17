@@ -34,7 +34,17 @@ const router = express.Router();
     });
 
 // PUT
-
+router.put('/:id', (req,res)=>{
+    console.log('task complete');
+    const taskId = req.params.id;
+    const queryText = `UPDATE "to_do_list" SET "status" = 'complete' WHERE "id" = $1;`
+    pool.query(queryText, [taskId])
+        .then((results)=>{
+            res.sendStatus(200);
+        }).catch((error)=>{
+            res.sendStatus(500);
+        })
+})
 
 // DELETE
 router.delete('/:id', (req,res)=>{

@@ -50,12 +50,15 @@ function getTasks(){
         $('#to-do-list').empty();
         for (let todo of response){
             $('#to-do-list').append(`
-                <div class="to-do-item" id="to-do-1">
+                <div class="to-do-item" id="to-do-${todo.id}">
                     <h2>${todo.task}</h2>
                     <button id="completeBtn" data-id="${todo.id}">Complete</button>
                     <button id="deleteBtn" data-id="${todo.id}">Delete</button>
                 </div>
             `);
+            if(todo.status==='complete'){
+                $(`#to-do-${todo.id}`).css("background-color","green");
+            }
         }
     }).catch(function(error){
         console.log('error in getTasks', error);
@@ -69,6 +72,15 @@ function getTasks(){
  */
 function completeTask(){
     console.log('in completeTask');
+    const taskId = $(this).data('id');
+    $(this).parent().css("background-color","green");
+    $.ajax({
+        type: 'PUT',
+        url: `/todo/${taskId}`
+    }).catch(function(error){
+        console.log('error in completeTasks', error);
+        alert('Something went wrong!');
+    })
 }
 
 
@@ -90,17 +102,3 @@ function deleteTask(){
     })
 }
 
-
-// function deleteSong(){
-//     const songId=$(this).data('id');
-//     console.log('deleteSong', songId);
-//     $.ajax({
-//         type: 'DELETE',
-//         url: `/song/${songId}` // No ':'
-//     }).then(function(response){
-//         getSongs();
-//     }).catch(function(error) {
-//         console.log(error);
-//         alert('Something went wrong!');
-//     })
-// }
